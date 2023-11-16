@@ -22,7 +22,7 @@ const deleteList = (value: string) => {
 };
 
 const mouseover = () => {
-  message.value = "Yakin?";
+  message.value = "U Sure?";
 };
 
 const mouseleave = () => {
