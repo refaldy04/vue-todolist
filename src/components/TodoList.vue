@@ -9,21 +9,38 @@ interface IEmit {
 </script>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, ref } from "vue";
 
 const emit = defineEmits<IEmit>();
 
 const props = defineProps<IProps>();
 
+const message = ref<string>("Delete");
+
 const deleteList = (value: string) => {
   emit("delete-list", props.title);
+};
+
+const mouseover = () => {
+  message.value = "Yakin?";
+};
+
+const mouseleave = () => {
+  message.value = "Delete";
 };
 </script>
 
 <template>
   <div class="todolist-item">
     <span>{{ props.title }}</span>
-    <button class="delete-btn" @click="deleteList(props.title)">Delete</button>
+    <button
+      class="delete-btn"
+      @click="deleteList(props.title)"
+      @mouseover="mouseover"
+      @mouseleave="mouseleave"
+    >
+      {{ message }}
+    </button>
   </div>
 </template>
 
