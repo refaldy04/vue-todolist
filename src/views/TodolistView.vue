@@ -26,6 +26,7 @@ const recieveEmit = (value: string) => {
 
 <template>
   <div class="container">
+    <h1>My Todolist</h1>
     <div>
       <form @submit.prevent="addList(todolistForm.title)">
         <input
@@ -36,7 +37,7 @@ const recieveEmit = (value: string) => {
         <button type="submit">submit</button>
       </form>
 
-      <ul>
+      <ul v-if="todoList.length">
         <li v-for="(item, index) in todoList" :key="index">
           <TodoList
             :title="item.title"
@@ -44,6 +45,8 @@ const recieveEmit = (value: string) => {
           />
         </li>
       </ul>
+
+      <p v-else>List masih kosong</p>
     </div>
   </div>
 </template>
@@ -54,7 +57,12 @@ div.container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
+}
+
+h1 {
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
 form {
@@ -74,5 +82,9 @@ ul {
 
 li {
   list-style-type: none;
+}
+
+p {
+  margin-top: 10px;
 }
 </style>
