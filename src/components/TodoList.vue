@@ -36,6 +36,7 @@ const deleteList = (value: string) => {
   padding: 5px;
   display: flex;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .delete-btn {
