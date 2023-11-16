@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, type Ref } from "vue";
+import TodoList from "../components/TodoList.vue";
 
 interface ITodolist {
   title: string;
@@ -16,9 +17,9 @@ const addList = (newList: string) => {
   todolistForm.title = "";
 };
 
-const deleteList = (item: ITodolist) => {
+const recieveEmit = (value: string) => {
   todoList.value = todoList.value.filter(
-    (list: ITodolist) => list.title !== item.title
+    (list: ITodolist) => list.title !== value
   );
 };
 </script>
@@ -36,13 +37,11 @@ const deleteList = (item: ITodolist) => {
       </form>
 
       <ul>
-        <li
-          v-for="(item, index) in todoList"
-          :key="index"
-          class="todolist-item"
-        >
-          <span>{{ item.title }}</span>
-          <button class="delete-btn" @click="deleteList(item)">Delete</button>
+        <li v-for="(item, index) in todoList" :key="index">
+          <TodoList
+            :title="item.title"
+            @delete-list="(value) => recieveEmit(value)"
+          />
         </li>
       </ul>
     </div>
@@ -72,18 +71,8 @@ ul {
   margin: 0;
   padding: 0;
 }
-.todolist-item {
-  width: 100%;
-  background-color: white;
-  color: black;
-  margin: 5px 0;
-  padding: 5px;
-  display: flex;
-  justify-content: space-between;
-}
 
-.delete-btn {
-  background-color: rgb(240, 57, 57);
-  color: white;
+li {
+  list-style-type: none;
 }
 </style>
