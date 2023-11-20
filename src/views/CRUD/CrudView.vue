@@ -9,6 +9,7 @@ import { onMounted, reactive, watch } from "vue";
 import InputVue from "@/components/InputVue.vue";
 
 const inventoryForm: IInventory = reactive({
+  _id: "",
   id: "",
   name: "",
   brand: "",
@@ -61,19 +62,16 @@ const handleSubmit = async () => {
           <th>count</th>
           <th>option</th>
         </tr>
-        <tr
-          v-if="state.list.isLoading"
-          v-for="(item, index) in state.list.data"
-          :key="index"
-        >
-          <td>{{ item.id }}</td>
+        <tr v-for="(item, index) in state.list.data" :key="index">
+          <td>{{ item._id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.brand }}</td>
           <td>{{ item.count }}</td>
-          <td><button>Update</button></td>
-        </tr>
-        <tr v-else>
-          <td>Loading</td>
+          <td>
+            <RouterLink :to="{ name: 'crud edit', params: { id: item._id } }"
+              ><button>Update</button></RouterLink
+            >
+          </td>
         </tr>
       </table>
 

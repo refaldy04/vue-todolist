@@ -31,7 +31,7 @@ const handleInput = computed({
 
 <template>
   <div>
-    <label>{{ label }}</label>
+    <label>{{ label }} {{ inputValue }}</label>
     <br />
     <input :type="type" :placeholder="placeholder" v-model="handleInput" />
   </div>

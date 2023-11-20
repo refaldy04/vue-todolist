@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import TodolistVue from "../views/TodolistView.vue";
 import LoginView from "../views/LoginView.vue";
 import CrudView from "../views/CRUD/CrudView.vue";
+import FormCrudVue from "@/views/CRUD/FormCrud.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,11 @@ const router = createRouter({
       path: "/crud",
       name: "crud",
       component: CrudView,
+    },
+    {
+      path: "/crud/:id",
+      name: "crud edit",
+      component: FormCrudVue,
     },
   ],
 });
