@@ -19,14 +19,14 @@ interface IState {
   };
 }
 
-export const state = reactive<IState>({
+export const state = reactive<any>({
   list: {
     data: [],
     isLoading: false,
     isError: false,
   },
   detail: {
-    data: { _id: "", id: "", name: "", brand: "", count: "" },
+    data: {},
   },
 });
 
@@ -37,11 +37,11 @@ export const actions = {
   listInventoryError: () => {
     state.list.isError = true;
   },
-  listInventoryFulfiled: (data: IInventory[]) => {
+  listInventoryFulfiled: (data: any) => {
     state.list.data = data;
     state.list.isLoading = false;
   },
-  detailInventoryFulfiled: (data: IInventory) => {
+  detailInventoryFulfiled: (data: any) => {
     state.detail.data = data;
     state.list.isLoading = false;
   },

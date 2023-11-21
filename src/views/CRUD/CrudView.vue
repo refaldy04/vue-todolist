@@ -8,9 +8,8 @@ import {
 import { onMounted, reactive, watch } from "vue";
 import InputVue from "@/components/InputVue.vue";
 
-const inventoryForm: IInventory = reactive({
+const inventoryForm = reactive({
   _id: "",
-  id: "",
   name: "",
   brand: "",
   count: "",
@@ -19,11 +18,14 @@ const inventoryForm: IInventory = reactive({
 const getInventory = async () => {
   try {
     actions.listInventoryPending();
-    const { data } = await axios.get(
-      "https://crudcrud.com/api/2ccb9507f80a4ca9b71bb8051c2473bb/inventory"
-    );
+    const { data } = await axios.get("https://crudapi.co.uk/api/v1/inventory", {
+      headers: {
+        Authorization:
+          "Bearer 9lC5qqGJcv7KngUEoYgiDCfylFw7FuMyYI6m-X3Ahjv8f4wdLg",
+      },
+    });
     console.log(data);
-    actions.listInventoryFulfiled(data);
+    actions.listInventoryFulfiled(data.items);
   } catch (error) {
     actions.listInventoryError();
   }
@@ -35,12 +37,32 @@ watch(state.list.data, (newNumber, old) => {
 
 onMounted(() => getInventory());
 
+const handleDelete = async (itemID: string) => {
+  const { data } = await axios.delete(
+    `https://crudapi.co.uk/api/v1/inventory/${itemID}`,
+    {
+      headers: {
+        Authorization:
+          "Bearer 9lC5qqGJcv7KngUEoYgiDCfylFw7FuMyYI6m-X3Ahjv8f4wdLg",
+      },
+    }
+  );
+
+  getInventory();
+};
+
 const handleSubmit = async () => {
   try {
     actions.listInventoryPending();
     const { data } = await axios.post(
-      "https://crudcrud.com/api/2ccb9507f80a4ca9b71bb8051c2473bb/inventory",
-      inventoryForm
+      "https://crudapi.co.uk/api/v1/inventory",
+      [inventoryForm],
+      {
+        headers: {
+          Authorization:
+            "Bearer 9lC5qqGJcv7KngUEoYgiDCfylFw7FuMyYI6m-X3Ahjv8f4wdLg",
+        },
+      }
     );
     getInventory();
   } catch (error) {
@@ -63,28 +85,20 @@ const handleSubmit = async () => {
           <th>option</th>
         </tr>
         <tr v-for="(item, index) in state.list.data" :key="index">
-          <td>{{ item._id }}</td>
+          <td>{{ item._uuid }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.brand }}</td>
           <td>{{ item.count }}</td>
           <td>
-            <RouterLink :to="{ name: 'crud edit', params: { id: item._id } }"
+            <RouterLink :to="{ name: 'crud edit', params: { id: item._uuid } }"
               ><button>Update</button></RouterLink
             >
+            <button @click="handleDelete(item._uuid)">Delete</button>
           </td>
         </tr>
       </table>
 
       <form @submit.prevent="handleSubmit">
-        <div>
-          <InputVue
-            type="number"
-            placeholder="input id"
-            label="ID"
-            default-value=""
-            @passing-value="(value) => (inventoryForm.id = value)"
-          />
-        </div>
         <div>
           <InputVue
             type="text"

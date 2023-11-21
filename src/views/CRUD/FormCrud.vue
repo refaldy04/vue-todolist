@@ -7,57 +7,42 @@ import {
 } from "@/store/inventory/inventory.store";
 import axios from "axios";
 import { onMounted, reactive, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 const { id } = route.params;
-console.log(id);
-
-const getInventory = async () => {
-  try {
-    actions.listInventoryPending();
-    const { data } = await axios.get(
-      `https://crudcrud.com/api/2ccb9507f80a4ca9b71bb8051c2473bb/inventory/${id}`
-    );
-
-    actions.detailInventoryFulfiled(data);
-    inventoryForm.brand = data.brand;
-    inventoryForm.name = data.name;
-    inventoryForm.count = data.count;
-    inventoryForm.id = data.id;
-  } catch (error) {
-    actions.listInventoryError();
-  }
-};
-
-watch(state.list.data, (newNumber, old) => {
-  getInventory();
-});
-
-onMounted(() => getInventory());
 
 const inventoryForm = reactive({
-  id: "",
   name: "",
   brand: "",
   count: "",
 });
+
+const handleSubmit = async () => {
+  const { data } = await axios.put(
+    `https://crudapi.co.uk/api/v1/inventory/${id}`,
+    inventoryForm,
+    {
+      headers: {
+        Authorization:
+          "Bearer 9lC5qqGJcv7KngUEoYgiDCfylFw7FuMyYI6m-X3Ahjv8f4wdLg",
+      },
+    }
+  );
+
+  console.log(data);
+  router.push({
+    name: "crud",
+  });
+};
 </script>
 
 <template>
   <div>
     <h1>Update</h1>
 
-    <form>
-      <div>
-        <InputVue
-          type="number"
-          placeholder="input id"
-          label="ID"
-          default-value=""
-          @passing-value="(value) => (inventoryForm.id = value)"
-        />
-      </div>
+    <form @submit.prevent="handleSubmit">
       <div>
         <InputVue
           type="text"
