@@ -31,8 +31,12 @@ const handleInput = computed({
 
 <template>
   <div>
-    <label>{{ label }} {{ inputValue }}</label>
-    <br />
-    <input :type="type" :placeholder="placeholder" v-model="handleInput" />
+    <label class="label">{{ label }}</label>
+    <input
+      :type="type"
+      :placeholder="placeholder"
+      v-model="handleInput"
+      class="input input-bordered w-full text-black"
+    />
   </div>
 </template>

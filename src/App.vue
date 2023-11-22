@@ -4,18 +4,18 @@ import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
-  <div>
+  <div class="min-h-screen">
     <div class="wrapper">
       <!-- <h1>Test test</h1> -->
       <!-- <HelloWorld msg="You did it!" /> -->
 
-      <nav style="display: flex; gap: 10px">
+      <!-- <nav style="display: flex; gap: 10px">
         <RouterLink to="/">Home test</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/todolist">Todolist</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/crud">CRUD</RouterLink>
-      </nav>
+      </nav> -->
     </div>
     <hr />
     <RouterView />

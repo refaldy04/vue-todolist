@@ -1,8 +1,7 @@
 import { reactive } from "vue";
 
 export interface IInventory {
-  _id: string;
-  id: string;
+  _uuid: string;
   name: string;
   brand: string;
   count: string;
@@ -19,7 +18,7 @@ interface IState {
   };
 }
 
-export const state = reactive<any>({
+export const state = reactive<IState>({
   list: {
     data: [],
     isLoading: false,
